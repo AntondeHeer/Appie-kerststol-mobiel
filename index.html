@@ -2258,4 +2258,144 @@ button,.slot{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
  /* De iframe-locaties blijven toegankelijk; oude overlay-opmaak blijft verder intact. */
 }
 </style>
+
+<style id="appie-mobile-v167-overlay-fix">
+/* Mobiel: ook in de molen, het pakhuis en de bakkerij
+   de navigatie en de inventaris naast de scène tonen. */
+@media (orientation:landscape) and (max-height:600px) and (pointer:coarse) {
+  #millOverlay, #pakhuisOverlay, #bakeryIntegratedOverlay {
+    position:fixed!important;
+    inset:0!important;
+    display:none;
+    padding:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+    background:#100f23!important;
+  }
+  #millOverlay[style*="display: flex"],
+  #pakhuisOverlay[style*="display: flex"],
+  #bakeryIntegratedOverlay[style*="display: flex"] {
+    display:block!important;
+  }
+  #millOverlay>h1, #millOverlay>p,
+  #pakhuisOverlay>h1, #pakhuisOverlay>p,
+  #bakeryIntegratedOverlay>#bakeryLocation {
+    display:none!important;
+  }
+  #millFrame, #pakhuisFrame, #bakeryIntegratedFrame {
+    position:absolute!important;
+    left:var(--appie-left)!important;
+    top:var(--appie-top)!important;
+    width:var(--appie-play-width)!important;
+    height:var(--appie-play-height)!important;
+    min-width:0!important;
+    min-height:0!important;
+    max-width:none!important;
+    max-height:none!important;
+    flex:none!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    border:2px solid #9b6c35!important;
+  }
+  #millOverlay>section, #pakhuisOverlay>section,
+  #bakeryIntegratedOverlay>#bakeryBagMount {
+    position:absolute!important;
+    left:calc(var(--appie-left) + var(--appie-play-width) + var(--appie-gap))!important;
+    top:var(--appie-top)!important;
+    width:var(--appie-side)!important;
+    height:var(--appie-play-height)!important;
+    min-width:0!important;
+    min-height:0!important;
+    max-width:none!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:4px!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:5px!important;
+    align-items:stretch!important;
+    overflow:hidden!important;
+    background:#17152e!important;
+    border:2px solid #9b6c35!important;
+  }
+  #millBack, #leavePakhuis {
+    display:block!important;
+    width:100%!important;
+    min-height:36px!important;
+    flex:0 0 auto!important;
+    font-size:11px!important;
+    padding:4px 2px!important;
+    white-space:normal!important;
+  }
+  #millBagMount, #pakhuisBagMount {
+    display:flex!important;
+    flex-direction:column!important;
+    min-height:0!important;
+    flex:1 1 auto!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    touch-action:pan-y!important;
+  }
+  #millBagMount #bag, #pakhuisBagMount #bag,
+  #bakeryBagMount #bag {
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    flex:1 1 auto!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    touch-action:pan-y!important;
+    flex-wrap:nowrap!important;
+  }
+  #millBagMount #slots, #pakhuisBagMount #slots,
+  #bakeryBagMount #slots {
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    flex-wrap:nowrap!important;
+    overflow:visible!important;
+    gap:3px!important;
+    touch-action:pan-y!important;
+  }
+  #millBagMount .slot, #pakhuisBagMount .slot,
+  #bakeryBagMount .slot {
+    width:100%!important;
+    min-width:0!important;
+    min-height:34px!important;
+    flex:0 0 auto!important;
+    font-size:11px!important;
+    white-space:normal!important;
+  }
+  #bakeryIntegratedOverlay>.appie-logo-title {
+    position:static!important;
+    display:block!important;
+    height:0!important;
+    min-height:0!important;
+    width:0!important;
+    overflow:visible!important;
+  }
+  #bakeryReturnButton {
+    position:fixed!important;
+    left:calc(var(--appie-left) + var(--appie-play-width) + var(--appie-gap) + 4px)!important;
+    top:calc(var(--appie-top) + 4px)!important;
+    right:auto!important;
+    z-index:100001!important;
+    width:calc(var(--appie-side) - 8px)!important;
+    font-size:11px!important;
+    padding:4px 2px!important;
+  }
+  #bakeryIntegratedOverlay>#bakeryBagMount {
+    padding-top:40px!important;
+  }
+  #appie-music-toggle {
+    z-index:100002!important;
+  }
+}
+</style>
+
 </body></html>
