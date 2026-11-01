@@ -2398,4 +2398,46 @@ button,.slot{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 }
 </style>
 
+<style id="appie-mobile-v168-inner">
+@media (orientation:landscape) and (max-height:600px) and (pointer:coarse){
+ :root{--appie-play-width:min(calc((100dvh - 8px)*16/9),calc(100vw - var(--appie-side) - var(--appie-gap) - 12px - env(safe-area-inset-left) - env(safe-area-inset-right)))!important;--appie-top:max(2px,calc((100dvh - var(--appie-play-height))/2))}
+ #millOverlay>h1,#pakhuisOverlay>h1,#millOverlay>p,#pakhuisOverlay>p{display:none!important}
+ #millFrame,#pakhuisFrame,#bakeryIntegratedFrame{object-fit:contain!important;overflow:hidden!important}
+ #appie-music-toggle{left:calc(var(--appie-left) + var(--appie-play-width) - 38px)!important;top:calc(var(--appie-top) + 5px)!important;z-index:100004!important}
+ #bakeryReturnButton{z-index:100005!important}
+}
+</style>
+<script id="appie-mobile-v168-iframe-sizing">
+/* Schaal de originele, ingebedde puzzelwerelden zonder hun kliklogica te wijzigen. */
+(function(){
+ const outerIds=['millFrame','pakhuisFrame','bakeryIntegratedFrame'];
+ const mobile=()=>matchMedia('(orientation:landscape) and (max-height:600px) and (pointer:coarse)').matches;
+ const css=`
+ html,body{margin:0!important;padding:0!important;overflow:hidden!important;max-width:100%!important;max-height:100%!important}
+ h1,body>h2,body>small,body>p.intro{display:none!important}
+ .game,#gameWrap,.gamewrap,.game-container,.container{max-width:100%!important;margin:0 auto!important}
+ .game{width:min(100vw,calc((100dvh - 78px)*1672/941))!important;margin:0 auto!important}
+ .scene{width:100%!important;aspect-ratio:1672/941!important;max-height:calc(100dvh - 65px)!important;margin:0 auto!important}
+ #scene,.scene-wrap,.scene-container{max-width:100%!important}
+ .nav{font-size:11px!important;padding:4px 6px!important}
+ `;
+ function fit(doc){
+  if(!doc||!doc.documentElement)return;
+  let style=doc.getElementById('appie-v168-inner');
+  if(!style){style=doc.createElement('style');style.id='appie-v168-inner';(doc.head||doc.documentElement).appendChild(style)}
+  style.textContent=mobile()?css:'';
+  /* Binnenste puzzels zijn vaak nog eens een iframe diep genest. */
+  for(const frame of doc.querySelectorAll('iframe')){
+   try{fit(frame.contentDocument)}catch(e){}
+   if(!frame.dataset.appie168){frame.dataset.appie168='1';frame.addEventListener('load',()=>{try{fit(frame.contentDocument)}catch(e){}},{passive:true})}
+  }
+ }
+ function apply(){
+  for(const id of outerIds){const f=document.getElementById(id);if(!f)continue;try{fit(f.contentDocument)}catch(e){}}
+ }
+ for(const id of outerIds){const f=document.getElementById(id);if(f)f.addEventListener('load',apply,{passive:true})}
+ window.addEventListener('resize',apply,{passive:true});
+ setInterval(apply,1400);apply();
+})();
+</script>
 </body></html>
