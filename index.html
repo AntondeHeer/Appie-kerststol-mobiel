@@ -2426,4 +2426,22 @@ button,.slot{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 }
 </style>
 
+<style id="appie-mobile-v169-bakery-height-fix">
+/* V121 had een specifiekere !important max-height, waardoor de bakkerij-iframe
+   maar een halve speelveldhoogte kreeg. Dit geldt voor Muriel EN Anton. */
+@media (orientation:landscape) and (max-height:600px) and (pointer:coarse) {
+  #bakeryIntegratedOverlay #bakeryIntegratedFrame {
+    position:absolute!important;
+    left:var(--appie-left)!important;
+    top:var(--appie-top)!important;
+    width:var(--appie-play-width)!important;
+    height:var(--appie-play-height)!important;
+    min-height:var(--appie-play-height)!important;
+    max-height:var(--appie-play-height)!important;
+    max-width:none!important;
+    aspect-ratio:16/9!important;
+    flex:none!important;
+  }
+}
+</style>
 </body></html>
