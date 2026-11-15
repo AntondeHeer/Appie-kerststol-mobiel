@@ -2065,6 +2065,38 @@ document.getElementById('bakeryReturnButton').addEventListener('click',()=>{docu
 
 
 
+<!-- Appie statistieken: mobiele spelstarts en echte voltooiingen -->
+<script id="appie-mobile-statistics">
+(function(){
+ 'use strict';
+ const endpoint='https://strsssxpnrtkogwsjtme.supabase.co/rest/v1/rpc/appie_tel';
+ const key='sb_publishable_LBBxWVQxeMj5Aqt0b4smdA_GpMhoFeS';
+ let started=false,finished=false;
+ function record(event){
+  fetch(endpoint,{
+   method:'POST',
+   headers:{'Content-Type':'application/json','apikey':key,'Authorization':'Bearer '+key},
+   body:JSON.stringify({p_onderdeel:'spel_mobiel',p_gebeurtenis:event}),
+   keepalive:true
+  }).then(r=>{if(!r.ok)console.warn('Appie teller:',event,'HTTP',r.status)}).catch(e=>console.warn('Appie teller niet bereikbaar:',e));
+ }
+ document.addEventListener('click',function(e){
+  if(started)return;
+  if(e.target instanceof Element && e.target.closest('#appie-cinematic-start,#appie-new-game')){
+   started=true;
+   record('gestart');
+  }
+ },true);
+ // Alleen het normale bakkersfinale-bericht telt als voltooiing.
+ // Ctrl+Shift+O opent de outro uitsluitend voor testen en telt niet mee.
+ window.addEventListener('message',function(e){
+  if(finished || !started || !e.data || e.data.appieBakeryFinished!==true)return;
+  finished=true;
+  record('uitgespeeld');
+ });
+})();
+</script>
+
 <!-- Outro integratie: volledig gescheiden van de bestaande puzzels -->
 <style>
 #appieOutroOverlay{position:fixed;inset:0;z-index:2147483640;background:#060d1c;display:none;align-items:center;justify-content:center}
